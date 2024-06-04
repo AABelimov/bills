@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Bills</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="container">
+            <div class="menu">
+                <div class="menu__link">
+                    <a th:href="@{/users}">Клиенты</a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/orders/user/{userId}(userId=${user.id})}" th:text="${user.name}"></a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/order-stages/order/{orderId}(orderId=${order.id})}" th:text="${order.title}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        <div class="row stage-add-row">
+            <div class="container">
+                <div class="stage-add">
+                    <form th:action="@{/order-stages}" method="post" class="form stage-add__form">
+                        <div class="form__field stage-add__field">
+                            <label for="title">Этап:</label>
+                            <input type="text" id="title" name="title" class="form__value stage-add__value">
+                        </div>
+                        <div class="form__field stage-add__field">
+                            <label for="description">Об этапе:</label>
+                            <textarea type="text" id="description" name="description" class="form__value stage-add__value"></textarea>
+                        </div>
+                        <input type="hidden" name="orderId" th:value="${order.id}">
+                        <div class="form__button stage-add__button">
+                            <button type="submit">Добавить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row search-row">
+            <div class="container">
+                <div class="search">
+                    <form th:action="@{/order-stages/order/{orderId}(orderId=${order.id})}" method="get" class="form search__form">
+                        <div class="form__field search__field">
+                            <label for="search"></label>
+                            <input type="text" id="search" name="title" class="form__value search__value">
+                            <button type="submit">Искать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="stages">
+            <div class="container">
+                <div class="stages-container">
+                    <div th:each="orderStage : ${orderStages}" class="item stage-item">
+                        <div class="item__name stage-item__name">
+                            <a th:href="@{/bills/order-stage/{orederStageId}(orederStageId=${orderStage.id})}" th:text="${orderStage.title}"></a>
+                        </div>
+                        <div th:text="${orderStage.description}" class="item__about stage-item__about"></div>
+                        <div class="interaction stage-item__interaction">
+                            <div class="interaction__btn stage-item__btn">
+                                <form th:action="@{/order-stages/{orderStageId}(orderStageId=${orderStage.id})}" th:method="delete">
+                                    <button type="submit">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

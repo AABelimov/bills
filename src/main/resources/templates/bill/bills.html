@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Bills</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="container">
+            <div class="menu">
+                <div class="menu__link">
+                    <a th:href="@{/users}">Клиенты</a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/orders/user/{userId}(userId=${orderStage.order.user.id})}" th:text="${orderStage.order.user.name}"></a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/order-stages/order/{orderId}(orderId=${orderStage.order.id})}" th:text="${orderStage.order.title}"></a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/bills/order-stage/{orderStageId}(orderStageId=${orderStage.id})}" th:text="${orderStage.title}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        <div class="row bill-add-row">
+            <div class="container">
+                <div class="bill-add">
+                    <form th:action="@{/bills}" method="post" enctype="multipart/form-data" class="form bill-add__form">
+                        <div class="form__field bill-add__field">
+                            <label for="title">Счет:</label>
+                            <input type="text" id="title" name="title" class="form__value bill-add__value">
+                        </div>
+                        <div class="form__field bill-add__field">
+                            <label for="description">Описание:</label>
+                            <textarea type="text" id="description" name="description" class="form__value bill-add__value"></textarea>
+                        </div>
+                        <div class="form__field bill-add__field">
+                            <label for="file">Фото счета</label>
+                            <input type="file" name="file" id="file" accept="image/*">
+                        </div>
+                        <input type="hidden" name="orderStageId" th:value="${orderStage.id}">
+                        <div class="form__button bill-add__button">
+                            <button type="submit">Добавить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row search-row">
+            <div class="container">
+                <div class="search">
+                    <form th:action="@{/bills/order-stage/{orderStageId}(orderStageId=${orderStage.id})}" method="get" class="form search__form">
+                        <div class="form__field search__field">
+                            <label for="search"></label>
+                            <input type="text" id="search" name="title" class="form__value search__value">
+                            <button type="submit">Искать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="bills">
+            <div class="container">
+                <div class="bills-container">
+                    <div th:each="bill : ${bills}" class="bill-item">
+                        <div class="bill-item__photo">
+                            <img th:src="@{/bills/{billId}/image(billId=${bill.id})}" alt="alt">
+                        </div>
+                        <div class="bill-item__info">
+                            <div class="bill-item__store">
+                                <a th:href="@{/bills/{billId}(billId=${bill.id})}" th:text="${bill.title}"></a>
+                            </div>
+                            <div class="bill-item__about" th:text="${bill.description}"></div>
+                        </div>
+                        <div class="interaction bill-item__interaction">
+                            <div class="interaction__btn bill-item__btn">
+                                <form th:action="@{/bills/{billId}(billId=${bill.id})}" th:method="delete">
+                                    <button type="submit">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Bills</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="container">
+            <div class="menu">
+                <div class="menu__link">
+                    <a th:href="@{/users}">Клиенты</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        <div class="row user-add-row">
+            <div class="container">
+                <div class="user-add">
+                    <form th:action="@{/users}" method="post" class="form user-add__form">
+                        <div class="form__field user-add__field">
+                            <label for="name">Имя:</label>
+                            <input type="text" id="name" name="name" class="form__value user-add__value">
+                        </div>
+                        <div class="form__field user-add__field">
+                            <label for="phone">Телефон:</label>
+                            <input type="text" id="phone" name="numberPhone" class="form__value user-add__value">
+                        </div>
+                        <div class="form__field user-add__field">
+                            <label for="comment">О персонаже:</label>
+                            <textarea type="text" id="comment" name="comment" class="form__value user-add__value"></textarea>
+                        </div>
+                        <div class="form__button user-add__button">
+                            <button type="submit">Добавить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row search-row">
+            <div class="container">
+                <div class="search">
+                    <form th:action="@{/users}" method="get" class="form search__form">
+                        <div class="form__field search__field">
+                            <label for="search"></label>
+                            <input type="text" id="search" name="nameOrNumberPhone" class="form__value search__value">
+                            <button type="submit">Искать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="users">
+            <div class="container">
+                <div class="users-container">
+                    <div th:each="user : ${users}" class="item user-item">
+                        <div class="item__name user-item__name">
+                            <a th:href="@{/orders/user/{userId}(userId=${user.id})}" th:text="${user.name}"></a>
+                        </div>
+                        <div th:text="${user.comment}" class="item__about user-item__about"></div>
+                        <div class="interaction user-item__interaction">
+                            <div class="interaction__btn user-item__btn">
+                                <form th:action="@{/users/{userId}(userId=${user.id})}" th:method="delete">
+                                    <button type="submit">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

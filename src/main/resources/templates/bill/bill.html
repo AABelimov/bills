@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Bills</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="container">
+            <div class="menu">
+                <div class="menu__link">
+                    <a th:href="@{/users}">Клиенты</a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/orders/user/{userId}(userId=${bill.orderStage.order.user.id})}" th:text="${bill.orderStage.order.user.name}"></a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/order-stages/order/{orderId}(orderId=${bill.orderStage.order.id})}" th:text="${bill.orderStage.order.title}"></a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/bills/order-stage/{orderStageId}(orderStageId=${bill.orderStage.id})}" th:text="${bill.orderStage.title}"></a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/bills/{billId}(billId=${bill.id})}" th:text="${bill.title}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        <div class="row bill-edit-row">
+            <div class="container">
+                <div class="bill-edit">
+                    <form action="#" class="form bill-edit__form">
+                        <div class="form__field bill-edit__field">
+                            <label for="name">Счет:</label>
+                            <input placeholder="LeroyMerlen расходники" type="text" id="name"
+                                   class="form__value bill-edit__value">
+                        </div>
+                        <div class="form__field bill-edit__field">
+                            <label for="about">Примечание:</label>
+                            <textarea
+                                    placeholder="Lorem ipsum dolor, sit amet, consectetur adipisicing elit. Optio aut ipsa inventore iure nisi, earum eos eum cumque eaque culpa tenetur ab, tempora esse quo iste et libero saepe, nulla?"
+                                    type="text" id="about" name="about" class="form__value bill-edit__value"></textarea>
+                        </div>
+                        <div class="form__button bill-edit__button">
+                            <button type="submit">Изменить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row bill-row">
+            <div class="container">
+                <div class="bill">
+                    <div class="bill__image">
+                        <img th:src="@{/bills/{billId}/image(billId=${bill.id})}" alt="alt">
+                    </div>
+                    <div class="bill__about">
+                        <div class="bill__title" th:text="${bill.title}"></div>
+                        <div class="bill__description" th:text="${bill.description}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
