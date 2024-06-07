@@ -10,7 +10,7 @@
 <div class="wrapper">
     <div class="header">
         <div class="container">
-            <div class="menu">
+            <div sec:authorize="hasRole('ADMIN')" class="menu">
                 <div class="menu__link">
                     <a th:href="@{/users}">Клиенты</a>
                 </div>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="body">
-        <div class="row bill-add-row">
+        <div sec:authorize="hasRole('ADMIN')" class="row bill-add-row">
             <div class="container">
                 <div class="bill-add">
                     <form th:action="@{/bills}" method="post" enctype="multipart/form-data" class="form bill-add__form">
@@ -54,6 +54,20 @@
                 </div>
             </div>
         </div>
+        <div sec:authorize="hasRole('ADMIN')" class="row link-row">
+            <div class="container">
+                <div class="link">
+                    <span class="link__title">Ссылка для клиента: </span>
+                    <span class="link__value" th:text="${@environment.getProperty('host')}
+                        + ':'
+                        + ${@environment.getProperty('server.port')}
+                        + '/bills/order-stage/'
+                        + ${orderStage.id}
+                        + '?key='
+                        + ${orderStage.order.user.hashCode()}"></span>
+                </div>
+            </div>
+        </div>
         <div class="row search-row">
             <div class="container">
                 <div class="search">
@@ -71,12 +85,12 @@
             <div class="container">
                 <div class="bills-container">
                     <div th:each="bill : ${bills}" class="bill-item">
-                        <div class="bill-item__photo">
+                        <a th:href="@{'/bills/' + ${bill.id} + '?key=' + ${key}}" class="bill-item__photo">
                             <img th:src="@{/bills/{billId}/image(billId=${bill.id})}" alt="alt">
-                        </div>
+                        </a>
                         <div class="bill-item__info">
                             <div class="bill-item__store">
-                                <a th:href="@{/bills/{billId}(billId=${bill.id})}" th:text="${bill.title}"></a>
+                                <a th:href="@{'/bills/' + ${bill.id} + '?key=' + ${key}}" th:text="${bill.title}"></a>
                             </div>
                             <div class="bill-item__about" th:text="${bill.description}"></div>
                         </div>

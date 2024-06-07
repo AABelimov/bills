@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.aabelimov.bills.dto.CreateOrUpdateBillDto;
 import ru.aabelimov.bills.entity.Bill;
 import ru.aabelimov.bills.entity.OrderStage;
+import ru.aabelimov.bills.entity.User;
 import ru.aabelimov.bills.mapper.BillMapper;
 import ru.aabelimov.bills.repository.BillRepository;
 import ru.aabelimov.bills.service.BillService;
@@ -65,6 +66,16 @@ public class BillServiceDefaultImpl implements BillService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean isCorrectKey(Long id, String key) {
+        if (key.equals("null")) {
+            return false;
+        }
+        Bill bill = getBillById(id);
+        User user = bill.getOrderStage().getOrder().getUser();
+        return user.hashCode() == Integer.parseInt(key);
     }
 
     private String saveFile(MultipartFile file) throws IOException {

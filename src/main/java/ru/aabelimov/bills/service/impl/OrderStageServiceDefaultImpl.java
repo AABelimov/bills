@@ -7,6 +7,7 @@ import ru.aabelimov.bills.dto.CreateOrUpdateOrderStageDto;
 import ru.aabelimov.bills.entity.Bill;
 import ru.aabelimov.bills.entity.Order;
 import ru.aabelimov.bills.entity.OrderStage;
+import ru.aabelimov.bills.entity.User;
 import ru.aabelimov.bills.mapper.OrderStageMapper;
 import ru.aabelimov.bills.repository.OrderStageRepository;
 import ru.aabelimov.bills.service.BillService;
@@ -50,5 +51,15 @@ public class OrderStageServiceDefaultImpl implements OrderStageService {
         List<Bill> bills = billService.getBillsByOrderStageId(orderStage.getId());
         bills.forEach(billService::removeBill);
         orderStageRepository.delete(orderStage);
+    }
+
+    @Override
+    public boolean isCorrectKey(Long orderStageId, Integer key) {
+        if (key == null) {
+            return false;
+        }
+        OrderStage orderStage = getOrderStageById(orderStageId);
+        User user = orderStage.getOrder().getUser();
+        return user.hashCode() == key;
     }
 }

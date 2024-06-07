@@ -2,6 +2,7 @@ package ru.aabelimov.bills.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,11 +34,11 @@ public class BillController {
     }
 
     @GetMapping("order-stage/{orderStageId}")
+    @PreAuthorize("@orderStageServiceDefaultImpl.isCorrectKey(#orderStageId, #key) or hasAuthority('ROLE_ADMIN')")
     public String getBillsByOrderStageId(@PathVariable Long orderStageId,
                                          @RequestParam(required = false) String title,
-                                         @RequestParam(required = false) String key,
-                                         Model model,
-                                         Authentication authentication) {
+                                         @RequestParam(required = false) Integer key,
+                                         Model model) {
         List<Bill> bills;
         if (title == null) {
             bills = billService.getBillsByOrderStageId(orderStageId);
@@ -46,11 +47,15 @@ public class BillController {
         }
         model.addAttribute("orderStage", orderStageService.getOrderStageById(orderStageId));
         model.addAttribute("bills", bills);
+        model.addAttribute("key", key);
         return "bill/bills";
     }
 
     @GetMapping("{id}")
-    public String getBill(@PathVariable Long id, Model model) {
+    @PreAuthorize("@billServiceDefaultImpl.isCorrectKey(#id, #key) or hasAuthority('ROLE_ADMIN')")
+    public String getBill(@PathVariable Long id,
+                          @RequestParam(required = false) String key,
+                          Model model) {
         model.addAttribute("bill", billService.getBillById(id));
         return "bill/bill";
     }

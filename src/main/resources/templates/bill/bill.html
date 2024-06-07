@@ -10,7 +10,7 @@
 <div class="wrapper">
     <div class="header">
         <div class="container">
-            <div class="menu">
+            <div sec:authorize="hasRole('ADMIN')" class="menu">
                 <div class="menu__link">
                     <a th:href="@{/users}">Клиенты</a>
                 </div>
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="body">
-        <div class="row bill-edit-row">
+        <!--<div sec:authorize="hasRole('ADMIN')" class="row bill-edit-row">
             <div class="container">
                 <div class="bill-edit">
                     <form action="#" class="form bill-edit__form">
@@ -55,7 +55,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="row bill-row">
             <div class="container">
                 <div class="bill">
