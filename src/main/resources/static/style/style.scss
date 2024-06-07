@@ -136,6 +136,12 @@
 	}
 }
 
+.link {
+	&__title {
+		font-weight: 700;
+	}
+}
+
 .bill-item {
 	display: flex;
 	padding: 5px;
@@ -205,9 +211,11 @@
 	flex-direction: column;
 
 	&__image {
+		padding: 2px;
 		max-width: 650px;
 		width: 100%;
 		align-self: center;
+		border: 1px solid black;
 	}
 
 	&__image img {

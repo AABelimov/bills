@@ -20,4 +20,6 @@ public interface BillService {
     byte[] getImage(Long id) throws IOException;
 
     void removeBill(Bill bill);
+
+    boolean isCorrectKey(Long id, String key);
 }

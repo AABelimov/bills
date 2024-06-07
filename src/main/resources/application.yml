@@ -24,3 +24,8 @@ path:
     folder:
       with:
         bills: /bills/images
+
+server:
+  port: 8080
+
+host: localhost

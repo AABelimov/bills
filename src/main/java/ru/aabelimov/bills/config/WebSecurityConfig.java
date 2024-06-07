@@ -25,8 +25,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/users/**").hasAnyAuthority(Role.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.POST, "/orders/**", "/order-stages/**", "/bills/**").hasAnyAuthority(Role.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.DELETE, "/orders/**", "/order-stages/**", "/bills/**").hasAnyAuthority(Role.ROLE_ADMIN.name())
-                        .requestMatchers(HttpMethod.GET, "/orders/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/order-stages/**", "/bills/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/orders/**", "/order-stages/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/bills/**").permitAll()
                         .requestMatchers("/style/**").permitAll()
                 )
                 .build();
