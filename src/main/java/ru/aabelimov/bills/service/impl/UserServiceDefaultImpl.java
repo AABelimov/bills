@@ -43,21 +43,27 @@ public class UserServiceDefaultImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
-        return userRepository.findAllWithoutAdmin();
+        return userRepository.findAllWithoutAdminOrderByIdDesc();
     }
 
     @Override
     public List<User> findByNameOrNumberPhone(String nameOrNumberPhone) {
-        return userRepository.findByNameOrNumberPhoneWithoutAdmin(nameOrNumberPhone);
+        return userRepository.findByNameOrNumberPhoneWithoutAdminOrderByIdDesc(nameOrNumberPhone);
     }
 
     @Override
-    public User updateUser(Long id, CreateOrUpdateUserDto createOrUpdateUserDto) {
+    public void updateUser(Long id, CreateOrUpdateUserDto dto) {
         User user = getUserById(id);
-        user.setName(createOrUpdateUserDto.name());
-        user.setNumberPhone(createOrUpdateUserDto.numberPhone());
-        user.setComment(createOrUpdateUserDto.comment());
-        return userRepository.save(user);
+        if (!dto.name().isBlank()) {
+            user.setName(dto.name());
+        }
+        if (!dto.numberPhone().isBlank()) {
+            user.setNumberPhone(dto.numberPhone());
+        }
+        if (!dto.comment().isBlank()) {
+            user.setComment(dto.comment());
+        }
+        userRepository.save(user);
     }
 
     @Override

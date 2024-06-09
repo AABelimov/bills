@@ -9,6 +9,7 @@ public class UserMapper {
 
     public User toEntity(CreateOrUpdateUserDto dto) {
         User user = new User();
+        user.setUsername(dto.numberPhone());
         user.setName(dto.name());
         user.setNumberPhone(dto.numberPhone());
         user.setComment(dto.comment());

@@ -30,7 +30,9 @@ public class BillServiceDefaultImpl implements BillService {
     private String fileDir;
 
     @Override
-    public Bill createBill(CreateOrUpdateBillDto createOrUpdateBillDto, OrderStage orderStage, MultipartFile file) throws IOException {
+    public Bill createBill(CreateOrUpdateBillDto createOrUpdateBillDto,
+                           OrderStage orderStage,
+                           MultipartFile file) throws IOException {
         Bill bill = billMapper.toEntity(createOrUpdateBillDto);
         bill.setOrderStage(orderStage);
         bill.setPhotoPath(saveFile(file));
@@ -44,18 +46,35 @@ public class BillServiceDefaultImpl implements BillService {
 
     @Override
     public List<Bill> getBillsByOrderStageId(Long orderStageId) {
-        return billRepository.findAllByOrderStageId(orderStageId);
+        return billRepository.findAllByOrderStageIdOrderByIdDesc(orderStageId);
     }
 
     @Override
     public List<Bill> getBillsByOrderStageIdAndTitle(Long orderStageId, String title) {
-        return billRepository.findAllByOrderStageIdAndTitle(orderStageId, title);
+        return billRepository.findAllByOrderStageIdAndTitleOrderByIdDesc(orderStageId, title);
     }
 
     @Override
     public byte[] getImage(Long id) throws IOException {
         Bill bill = getBillById(id);
         return Files.readAllBytes(Path.of(bill.getPhotoPath()));
+    }
+
+    @Override
+    public Bill updateBill(Long id, CreateOrUpdateBillDto dto, MultipartFile file) throws IOException {
+        Bill bill = getBillById(id);
+        System.out.println(dto.title());
+        if (!file.isEmpty()) {
+            Files.deleteIfExists(Path.of(bill.getPhotoPath()));
+            bill.setPhotoPath(saveFile(file));
+        }
+        if (!dto.title().isBlank()) {
+            bill.setTitle(dto.title());
+        }
+        if (!dto.description().isBlank()) {
+            bill.setDescription(dto.description());
+        }
+        return billRepository.save(bill);
     }
 
     @Override

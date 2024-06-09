@@ -37,12 +37,24 @@ public class OrderStageServiceDefaultImpl implements OrderStageService {
 
     @Override
     public List<OrderStage> getOrderStagesByOrderId(Long orderId) {
-        return orderStageRepository.findAllByOrderId(orderId);
+        return orderStageRepository.findAllByOrderIdOrderByIdDesc(orderId);
     }
 
     @Override
     public List<OrderStage> getOrderStagesByOrderIdAndTitle(Long orderId, String title) {
-        return orderStageRepository.findAllByOrderIdAndTitle(orderId, title);
+        return orderStageRepository.findAllByOrderIdAndTitleOrderByIdDesc(orderId, title);
+    }
+
+    @Override
+    public void updateOrderStage(Long id, CreateOrUpdateOrderStageDto dto) {
+        OrderStage orderStage = getOrderStageById(id);
+        if (!dto.title().isBlank()) {
+            orderStage.setTitle(dto.title());
+        }
+        if (!dto.description().isBlank()) {
+            orderStage.setDescription(dto.description());
+        }
+        orderStageRepository.save(orderStage);
     }
 
     @Override

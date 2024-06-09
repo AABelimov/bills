@@ -11,9 +11,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
 
-    @Query("SELECT u FROM User u WHERE u.role != 1 AND (u.name LIKE %?1% OR u.numberPhone LIKE %?1%)")
-    List<User> findByNameOrNumberPhoneWithoutAdmin(String nameOrNumberPhone);
+    @Query("SELECT u FROM User u WHERE u.role != 1 AND (u.name LIKE %?1% OR u.numberPhone LIKE %?1%)  ORDER BY u.id DESC")
+    List<User> findByNameOrNumberPhoneWithoutAdminOrderByIdDesc(String nameOrNumberPhone);
 
-    @Query("SELECT u FROM User u WHERE u.role != 1")
-    List<User> findAllWithoutAdmin();
+    @Query("SELECT u FROM User u WHERE u.role != 1 ORDER BY u.id DESC")
+    List<User> findAllWithoutAdminOrderByIdDesc();
 }

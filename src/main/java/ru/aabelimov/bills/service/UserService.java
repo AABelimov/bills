@@ -16,7 +16,7 @@ public interface UserService extends UserDetailsService {
 
     List<User> findByNameOrNumberPhone(String nameOrNumberPhone);
 
-    User updateUser(Long id, CreateOrUpdateUserDto createOrUpdateUserDto);
+    void updateUser(Long id, CreateOrUpdateUserDto dto);
 
     void removeUserById(Long id);
 }

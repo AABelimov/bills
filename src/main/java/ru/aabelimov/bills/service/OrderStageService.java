@@ -15,6 +15,8 @@ public interface OrderStageService {
 
     List<OrderStage> getOrderStagesByOrderIdAndTitle(Long orderId, String title);
 
+    void updateOrderStage(Long id, CreateOrUpdateOrderStageDto dto);
+
     void removeOrderStage(OrderStage orderStage);
 
     boolean isCorrectKey(Long orderStageId, Integer key);

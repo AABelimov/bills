@@ -65,6 +65,11 @@
                         <div th:text="${order.description}" class="item__about order-item__about"></div>
                         <div class="interaction order-item__interaction">
                             <div class="interaction__btn order-item__btn">
+                                <a th:href="@{/orders/{orderId}/update(orderId=${order.id})}">
+                                    <button type="submit">Изменить</button>
+                                </a>
+                            </div>
+                            <div class="interaction__btn order-item__btn">
                                 <form th:action="@{/orders/{orderId}(orderId=${order.id})}" th:method="delete">
                                     <button type="submit">Удалить</button>
                                 </form>

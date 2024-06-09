@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findAllByUserId(Long userId);
+    List<Order> findAllByUserIdOrderByIdDesc(Long userId);
 
-    @Query("SELECT o FROM Order o WHERE o.user.id = ?1 AND o.title LIKE %?2%")
-    List<Order> findAllByUserIdAndTitle(Long userId, String title);
+    @Query("SELECT o FROM Order o WHERE o.user.id = ?1 AND o.title LIKE %?2% ORDER BY o.id DESC")
+    List<Order> findAllByUserIdAndTitleOrderByIdDesc(Long userId, String title);
 }

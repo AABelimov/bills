@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.aabelimov.bills.dto.CreateOrUpdateOrderDto;
+import ru.aabelimov.bills.dto.CreateOrUpdateOrderStageDto;
 import ru.aabelimov.bills.entity.Order;
 import ru.aabelimov.bills.entity.User;
 import ru.aabelimov.bills.service.OrderService;
@@ -37,6 +38,18 @@ public class OrderController {
             model.addAttribute("orders", orderService.getOrdersByUserIdAndTitle(userId, title));
         }
         return "order/orders";
+    }
+
+    @GetMapping("{id}/update")
+    public String getOrderUpdatePage(@PathVariable Long id, Model model) {
+        model.addAttribute("order", orderService.getOrderById(id));
+        return "order/order-edit";
+    }
+
+    @PatchMapping("{id}")
+    public String updateOrder(@PathVariable Long id, CreateOrUpdateOrderDto createOrUpdateOrderDto) {
+        orderService.updateOrder(id, createOrUpdateOrderDto);
+        return "redirect:/order-stages/order/%d".formatted(id);
     }
 
     @DeleteMapping("{id}")

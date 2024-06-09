@@ -19,6 +19,8 @@ public interface BillService {
 
     byte[] getImage(Long id) throws IOException;
 
+    Bill updateBill(Long id, CreateOrUpdateBillDto createOrUpdateBillDto, MultipartFile file) throws IOException;
+
     void removeBill(Bill bill);
 
     boolean isCorrectKey(Long id, String key);
