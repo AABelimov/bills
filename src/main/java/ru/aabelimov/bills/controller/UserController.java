@@ -30,10 +30,16 @@ public class UserController {
         return "user/users";
     }
 
-    @PatchMapping("{id}/edit")
+    @GetMapping("{id}/update")
+    public String getUserUpdatePage(@PathVariable Long id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
+        return "user/user-edit";
+    }
+
+    @PatchMapping("{id}")
     public String updateUser(@PathVariable Long id, CreateOrUpdateUserDto createOrUpdateUserDto) {
         userService.updateUser(id, createOrUpdateUserDto);
-        return null;
+        return "redirect:/orders/user/%d".formatted(id);
     }
 
     @DeleteMapping("{id}")

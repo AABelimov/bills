@@ -7,8 +7,9 @@ import ru.aabelimov.bills.entity.Bill;
 import java.util.List;
 
 public interface BillRepository extends JpaRepository<Bill, Long> {
-    List<Bill> findAllByOrderStageId(Long orderStageId);
 
-    @Query("SELECT b FROM Bill b WHERE b.orderStage.id = ?1 AND b.title LIKE %?2%")
-    List<Bill> findAllByOrderStageIdAndTitle(Long orderStageId, String title);
+    List<Bill> findAllByOrderStageIdOrderByIdDesc(Long orderStageId);
+
+    @Query("SELECT b FROM Bill b WHERE b.orderStage.id = ?1 AND b.title LIKE %?2% ORDER BY b.id DESC")
+    List<Bill> findAllByOrderStageIdAndTitleOrderByIdDesc(Long orderStageId, String title);
 }

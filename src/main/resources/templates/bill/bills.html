@@ -94,7 +94,7 @@
                             </div>
                             <div class="bill-item__about" th:text="${bill.description}"></div>
                         </div>
-                        <div class="interaction bill-item__interaction">
+                        <div sec:authorize="hasRole('ADMIN')" class="interaction bill-item__interaction">
                             <div class="interaction__btn bill-item__btn">
                                 <form th:action="@{/bills/{billId}(billId=${bill.id})}" th:method="delete">
                                     <button type="submit">Удалить</button>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html xmlns:th="http://www.thymeleaf.org" lang="ru">
+        <head>
+        <title>Bills</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="container">
+            <div sec:authorize="hasRole('ADMIN')" class="menu">
+                <div class="menu__link">
+                    <a th:href="@{/users}">Клиенты</a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/orders/user/{userId}(userId=${user.id})}" th:text="${user.name}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        <div class="user-edit">
+            <form th:action="@{/users/{id}(id=${user.id})}" th:method="patch" class="form user-edit__form">
+                <div class="form__field user-edit__field">
+                    <label for="name">Имя:</label>
+                    <input th:placeholder="${user.name}" type="text" id="name" name="name" class="form__value user-edit__value">
+                </div>
+                <div class="form__field user-edit__field">
+                    <label for="phone">Телефон:</label>
+                    <input th:placeholder="${user.numberPhone}" type="text" id="phone" name="numberPhone" class="form__value user-edit__value">
+                </div>
+                <div class="form__field user-edit__field">
+                    <label for="comment">О персонаже:</label>
+                    <textarea th:placeholder="${user.comment}" type="text" id="comment" name="comment" class="form__value user-edit__value"></textarea>
+                </div>
+                <div class="form__button user-edit__button">
+                    <button type="submit">Изменить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>

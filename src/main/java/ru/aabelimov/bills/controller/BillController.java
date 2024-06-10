@@ -3,7 +3,6 @@ package ru.aabelimov.bills.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +63,15 @@ public class BillController {
     @ResponseBody
     public byte[] getImage(@PathVariable Long id) throws IOException {
         return billService.getImage(id);
+    }
+
+    @PatchMapping(value = "{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String updateBill(@PathVariable Long id,
+                             CreateOrUpdateBillDto createOrUpdateBillDto,
+                             @RequestParam MultipartFile file,
+                             Model model) throws IOException {
+        model.addAttribute("bill", billService.updateBill(id, createOrUpdateBillDto, file));
+        return "bill/bill";
     }
 
     @DeleteMapping("{id}")

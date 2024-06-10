@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Bills</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="container">
+            <div sec:authorize="hasRole('ADMIN')" class="menu">
+                <div class="menu__link">
+                    <a th:href="@{/users}">Клиенты</a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/orders/user/{userId}(userId=${orderStage.order.user.id})}" th:text="${orderStage.order.user.name}"></a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/order-stages/order/{orderId}(orderId=${orderStage.order.id})}" th:text="${orderStage.order.title}"></a>
+                </div>
+                <div class="menu__symb">></div>
+                <div class="menu__link">
+                    <a th:href="@{/bills/order-stage/{orderStageId}(orderStageId=${orderStage.id})}" th:text="${orderStage.title}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        <div class="stage-edit">
+            <form th:action="@{/order-stages/{id}(id=${orderStage.id})}" th:method="patch" class="form stage-edit__form">
+                <div class="form__field stage-edit__field">
+                    <label for="title">Этап:</label>
+                    <input th:placeholder="${orderStage.title}" type="text" id="title" name="title" class="form__value stage-edit__value">
+                </div>
+                <div class="form__field stage-edit__field">
+                    <label for="description">Об этапе:</label>
+                    <textarea th:placeholder="${orderStage.description}" type="text" id="description" name="description" class="form__value stage-edit__value"></textarea>
+                </div>
+                <div class="form__button stage-edit__button">
+                    <button type="submit">Изменить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

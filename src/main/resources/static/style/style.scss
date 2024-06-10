@@ -125,14 +125,19 @@
 }
 
 .interaction {
-	margin-top: 15px;
 	align-self: end;
 	text-align: end;
 
 	&__btn button {
+		min-width: 70px;
 		padding: 3px 5px;
+		margin-top: 5px;
 		border: 1px solid black;
 		border-radius: 2px;
+	}
+
+	@media (max-width: 510px) {
+		margin-top: 15px;
 	}
 }
 
@@ -183,7 +188,7 @@
 		width: 100%;
 	}
 
-	@media (max-width: 510px){
+	@media (max-width: 510px) {
 		flex-wrap: wrap;
 		justify-content: center;
 

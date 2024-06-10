@@ -40,6 +40,18 @@ public class OrderStageController {
         return "order_stage/order-stages";
     }
 
+    @GetMapping("{id}/update")
+    public String getOrderStageUpdatePage(@PathVariable Long id, Model model) {
+        model.addAttribute("orderStage", orderStageService.getOrderStageById(id));
+        return "order_stage/order-stage-edit";
+    }
+
+    @PatchMapping("{id}")
+    public String updateOrderStage(@PathVariable Long id, CreateOrUpdateOrderStageDto createOrUpdateOrderStageDto) {
+        orderStageService.updateOrderStage(id, createOrUpdateOrderStageDto);
+        return "redirect:/bills/order-stage/%d".formatted(id);
+    }
+
     @DeleteMapping("{id}")
     public String removeOrderStage(@PathVariable Long id) {
         OrderStage orderStage = orderStageService.getOrderStageById(id);

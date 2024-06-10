@@ -34,20 +34,22 @@
         </div>
     </div>
     <div class="body">
-        <!--<div sec:authorize="hasRole('ADMIN')" class="row bill-edit-row">
+        <div sec:authorize="hasRole('ADMIN')" class="row bill-edit-row">
             <div class="container">
                 <div class="bill-edit">
-                    <form action="#" class="form bill-edit__form">
+                    <form th:action="@{/bills/{id}(id=${bill.id})}" th:method="patch" enctype="multipart/form-data" class="form bill-edit__form">
                         <div class="form__field bill-edit__field">
                             <label for="name">Счет:</label>
-                            <input placeholder="LeroyMerlen расходники" type="text" id="name"
-                                   class="form__value bill-edit__value">
+                            <input th:placeholder="${bill.title}" type="text" id="name" name="title" class="form__value bill-edit__value">
                         </div>
                         <div class="form__field bill-edit__field">
                             <label for="about">Примечание:</label>
-                            <textarea
-                                    placeholder="Lorem ipsum dolor, sit amet, consectetur adipisicing elit. Optio aut ipsa inventore iure nisi, earum eos eum cumque eaque culpa tenetur ab, tempora esse quo iste et libero saepe, nulla?"
-                                    type="text" id="about" name="about" class="form__value bill-edit__value"></textarea>
+                            <textarea th:placeholder="${bill.description}"
+                                    type="text" id="about" name="description" class="form__value bill-edit__value"></textarea>
+                        </div>
+                        <div class="form__field bill-edit__field">
+                            <label for="file">Фото счета</label>
+                            <input type="file" name="file" id="file" accept="image/*">
                         </div>
                         <div class="form__button bill-edit__button">
                             <button type="submit">Изменить</button>
@@ -55,7 +57,7 @@
                     </form>
                 </div>
             </div>
-        </div>-->
+        </div>
         <div class="row bill-row">
             <div class="container">
                 <div class="bill">

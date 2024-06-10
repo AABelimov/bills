@@ -36,12 +36,24 @@ public class OrderServiceDefaultImpl implements OrderService {
 
     @Override
     public List<Order> getOrdersByUserId(Long userId) {
-        return orderRepository.findAllByUserId(userId);
+        return orderRepository.findAllByUserIdOrderByIdDesc(userId);
     }
 
     @Override
     public List<Order> getOrdersByUserIdAndTitle(Long userId, String title) {
-        return orderRepository.findAllByUserIdAndTitle(userId, title);
+        return orderRepository.findAllByUserIdAndTitleOrderByIdDesc(userId, title);
+    }
+
+    @Override
+    public void updateOrder(Long id, CreateOrUpdateOrderDto dto) {
+        Order order = getOrderById(id);
+        if (!dto.title().isBlank()) {
+            order.setTitle(dto.title());
+        }
+        if (!dto.description().isBlank()) {
+            order.setDescription(dto.description());
+        }
+        orderRepository.save(order);
     }
 
     @Override
